@@ -61,9 +61,9 @@ function Forecast (opts, next) {
       }
     }, body.forecast.simpleforecast.forecastday[0]);
 
-    temp = (temp.high.celsius + temp.low.celsius) / 2;
+    temp = (parseInt(temp.high.celsius) + parseInt(temp.low.celsius)) / 2;
 
-    next(null, temp.toFixed(2));
+    next(null, parseFloat(temp.toFixed(2)));
 
   });
 
