@@ -2,6 +2,7 @@ var should = require('should');
 var owm = require('../weather/openweathermap');
 var wunderground = require('../weather/wunderground');
 var wwo = require('../weather/worldweatheronline');
+var weather = require('../weather');
 
 describe('OpenWeatherMap', function () {
   it('should return valid historical data', function () {
@@ -28,6 +29,15 @@ describe('WorldWeatherOnline', function () {
     wwo([55.5913, 37.2613], 1416528000, function (e, temp) {
       e.should.be.not.ok;
       temp.should.be.equal(-1);
+    });
+  });
+});
+
+describe('Weather mediator', function () {
+  it('should return valid average historical data', function () {
+    weather('VKO', 1416528000, function (e, temp) {
+      e.should.be.not.ok;
+      temp.should.be.approximately(-4.92, 0.01);
     });
   });
 });
