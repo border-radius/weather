@@ -6,21 +6,23 @@ var openweathermap = require('./openweathermap');
 var wunderground = require('./wunderground');
 var worldweatheronline = require('./worldweatheronline');
 
-module.exports = function (city, date, next) {
+module.exports = function (opts, next) {
   
-  city = iata(city);
+  var search = iata(opts.iata);
 
-  if (!city) return next(new Error('Location not found'));
+  if (!search) return next(new Error('Location not found'));
+
+  search.date = opts.date;
 
   async.parallel([
     function (next) {
-      openweathermap(city, date, next);
+      openweathermap(search, next);
     },
     function (next) {
-      wunderground(city, date, next);
+      wunderground(search, next);
     },
     function (next) {
-      worldweatheronline(city, date, next);
+      worldweatheronline(search, next);
     }
   ], function (e, temps) {
     if (e) return next(e);

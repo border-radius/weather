@@ -23,5 +23,10 @@ module.exports = function (code) {
     ready = true;
   }
 
-  return IATA[code];
+  if (IATA[code]) {
+    return {
+      lon: IATA[code][0],
+      lat: IATA[code][1]
+    };
+  }
 };

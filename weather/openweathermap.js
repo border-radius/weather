@@ -1,14 +1,14 @@
 var request = require('../lib/request');
 
-module.exports = function (coords, date, next) {
+module.exports = function (opts, next) {
 
   /* Get stantion code */
 
   request([
     'http://api.openweathermap.org/data/2.5/station/find?lat=',
-    coords[0],
+    opts.lon,
     '&lon=',
-    coords[1],
+    opts.lat,
     '&cnt=1'
   ].join(''), function (e, body) {
     if (e) return next(e);
@@ -26,9 +26,9 @@ module.exports = function (coords, date, next) {
       'http://api.openweathermap.org/data/2.5/history/station?id=',
       body[0].station.id,
       '&type=day&start=',
-      date,
+      parseInt(opts.date.getTime() / 1000),
       '&end=',
-      date
+      parseInt(opts.date.getTime() / 1000)
     ].join(''), function (e, body) {
       if (e) return next(e);
 

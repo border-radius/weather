@@ -2,21 +2,19 @@ var request = require('../lib/request');
 var leadingZero = require('../lib/leadingzero');
 var APIKey = require('../config.json').WunderGroundAPIKey;
 
-module.exports = function (coords, date, next) {
-
-  date = new Date(date * 1000);
+module.exports = function (opts, next) {
 
   request([
     'http://api.wunderground.com/api/',
     APIKey,
     '/history_',
-    date.getUTCFullYear(),
-    leadingZero(date.getUTCMonth() + 1),
-    leadingZero(date.getUTCDate()),
+    opts.date.getUTCFullYear(),
+    leadingZero(opts.date.getUTCMonth() + 1),
+    leadingZero(opts.date.getUTCDate()),
     '/q/',
-    coords[0],
+    opts.lon,
     ',',
-    coords[1],
+    opts.lat,
     '.json'
   ].join(''), function (e, body) {
     if (e) return next(e);

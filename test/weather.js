@@ -4,9 +4,15 @@ var wunderground = require('../weather/wunderground');
 var wwo = require('../weather/worldweatheronline');
 var weather = require('../weather');
 
+var nov21 = new Date('2014-11-21');
+
 describe('OpenWeatherMap', function () {
   it('should return valid historical data', function (done) {
-    owm([55.5913, 37.2613], 1416528000, function (e, temp) {
+    owm({
+      lon: 55.5913,
+      lat: 37.2613,
+      date: nov21
+    }, function (e, temp) {
       (e === null).should.be.true;
       temp.should.be.approximately(-6.77, 0.01);
       done();
@@ -16,7 +22,11 @@ describe('OpenWeatherMap', function () {
 
 describe('Wunderground', function () {
   it('should return valid historical data', function (done) {
-    wunderground([55.5913, 37.2613], 1416528000, function (e, temp) {
+    wunderground({
+      lon: 55.5913,
+      lat: 37.2613, 
+      date: nov21
+    }, function (e, temp) {
       (e === null).should.be.true;
       temp.should.be.equal(-7);
       done();
@@ -26,7 +36,11 @@ describe('Wunderground', function () {
 
 describe('WorldWeatherOnline', function () {
   it('should return valid historical data', function (done) {
-    wwo([55.5913, 37.2613], 1416528000, function (e, temp) {
+    wwo({
+      lon: 55.5913,
+      lat: 37.2613, 
+      date: nov21
+    }, function (e, temp) {
       (e === null).should.be.true;
       temp.should.be.equal(-1);
       done();
@@ -36,7 +50,10 @@ describe('WorldWeatherOnline', function () {
 
 describe('Weather mediator', function () {
   it('should return valid average historical data', function (done) {
-    weather('VKO', 1416528000, function (e, temp) {
+    weather({
+      iata: 'VKO', 
+      date: nov21
+    }, function (e, temp) {
       (e === null).should.be.true;
       temp.should.be.approximately(-4.92, 0.01);
       done();
