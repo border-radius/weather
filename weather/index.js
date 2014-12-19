@@ -46,6 +46,8 @@ function Weather (opts, next) {
       return sum + temp;
     }, 0) / temps.length;
 
+    temp = parseFloat(temp.toFixed(2));
+
     next(null, temp);
   });
 };

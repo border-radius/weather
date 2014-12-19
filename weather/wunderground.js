@@ -22,7 +22,7 @@ module.exports = function (opts, next) {
     if (
       !body ||
       !body.history ||
-      !body.history.dailysummary
+      !body.history.dailysummary.length
     ) {
       return next(null, null);
     }
