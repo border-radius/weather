@@ -3,6 +3,7 @@ var APIKey = require('../config.json').WorldWeatherOnlineAPIKey;
 
 function leadingZero (num) {
   if (num < 10) return '0' + num;
+  return num;
 }
 
 module.exports = function (coords, date, next) {
@@ -36,7 +37,10 @@ module.exports = function (coords, date, next) {
       return next(new Error('Could not receive historical data'));
     }
 
-    var temp = (body.data.weather[0].mintempC + body.data.weather[0].maxtempC) / 2;
+    var temp = (
+      parseFloat(body.data.weather[0].mintempC) +
+      parseFloat(body.data.weather[0].maxtempC)
+    ) / 2;
 
     next(null, temp);
   });

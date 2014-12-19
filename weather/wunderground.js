@@ -3,6 +3,7 @@ var APIKey = require('../config.json').WunderGroundAPIKey;
 
 function leadingZero (num) {
   if (num < 10) return '0' + num;
+  return num;
 }
 
 module.exports = function (coords, date, next) {
@@ -30,12 +31,12 @@ module.exports = function (coords, date, next) {
     if (
       !body ||
       !body.history ||
-      !body.history.dialysummury
+      !body.history.dailysummary
     ) {
       return next(new Error('Could not fetch weather data'));
     }
 
-    next(null, body.history.dialysummury[0].meantempm);
+    next(null, parseFloat(body.history.dailysummary[0].meantempm));
 
   });
 
