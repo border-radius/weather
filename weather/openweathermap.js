@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('../lib/request');
 
 module.exports = function (coords, date, next) {
 
@@ -10,13 +10,15 @@ module.exports = function (coords, date, next) {
     '&lon=',
     coords[1],
     '&cnt=1'
-  ].join(''), function (e, res, body) {
-    if (!e && res.statusCode !== 200) e = new Error('Server responded with status code ' + res.statusCode);
+  ].join(''), function (e, body) {
     if (e) return next(e);
-    
-    body = JSON.parse(body);
 
-    if (!body || !body[0].station.id) return next(new Error('Could not receive station id'));
+    if (
+      !body ||
+      !body[0].station.id
+    ) {
+      return next(null, null);
+    }
 
     /* Get historical temperature data */
 
@@ -27,13 +29,16 @@ module.exports = function (coords, date, next) {
       date,
       '&end=',
       date
-    ].join(''), function (e, res, body) {
-      if (!e && res.statusCode !== 200) e = new Error('Server responded with status code ' + res.statusCode);
+    ].join(''), function (e, body) {
       if (e) return next(e);
 
-      body = JSON.parse(body);
-
-      if (!body || !body.list || !body.list[0].temp) return next(new Error('Could not receive temperature data'));
+      if (
+        !body ||
+        !body.list ||
+        !body.list[0].temp
+      ) {
+        return next(null, null);
+      }
 
       var temp = body.list[0].temp.v - 273.15;
 

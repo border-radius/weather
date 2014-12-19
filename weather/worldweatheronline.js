@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('../lib/request');
 var leadingZero = require('../lib/leadingzero');
 var APIKey = require('../config.json').WorldWeatherOnlineAPIKey;
 
@@ -20,17 +20,14 @@ module.exports = function (coords, date, next) {
     ',',
     coords[1],
     '&format=json'
-  ].join(''), function (e, res, body) {
-    if (!e && res.statusCode !== 200) e = new Error('Server responded with status code ' + res.statusCode);
+  ].join(''), function (e, body) {
     if (e) return next(e);
-    
-    body = JSON.parse(body);
 
     if (
       !body ||
       !body.data.weather
     ) {
-      return next(new Error('Could not receive historical data'));
+      return next(null, null);
     }
 
     var temp = (

@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('../lib/request');
 var leadingZero = require('../lib/leadingzero');
 var APIKey = require('../config.json').WunderGroundAPIKey;
 
@@ -18,18 +18,15 @@ module.exports = function (coords, date, next) {
     ',',
     coords[1],
     '.json'
-  ].join(''), function (e, res, body) {
-    if (!e && res.statusCode !== 200) e = new Error('Server responded with status code ' + res.statusCode);
+  ].join(''), function (e, body) {
     if (e) return next(e);
-
-    body = JSON.parse(body);
 
     if (
       !body ||
       !body.history ||
       !body.history.dailysummary
     ) {
-      return next(new Error('Could not fetch weather data'));
+      return next(null, null);
     }
 
     next(null, parseFloat(body.history.dailysummary[0].meantempm));
