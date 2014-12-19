@@ -2,9 +2,6 @@ var request = require('../lib/request');
 var resetTime = require('../lib/resetTime');
 
 function Today (opts, next) {
-
-  /* Today's data available on different API */
-
   request([
     'http://api.openweathermap.org/data/2.5/weather?lat=',
     opts.lat,
@@ -18,6 +15,33 @@ function Today (opts, next) {
     return next(null, temp);
   });
 
+}
+
+function Forecast (opts, next) {
+  request([
+    'http://api.openweathermap.org/data/2.5/forecast?lat=',
+    opts.lat,
+    '&lon=',
+    opts.lon
+  ].join(''), function (e, body) {
+    if (e) return next(e);
+
+    var temp = body.list.reduce(function (nearest, current) {
+      if (
+        Math.abs(current.dt - opts.date.getTime()/1000)
+        <
+        Math.abs(nearest.dt - opts.date.getTime()/1000)
+      ) {
+        return current;
+      } else {
+        return nearest;
+      }
+    }, body.list[0]);
+   
+    temp = temp.main.temp - 273.15;
+
+    return next(null, temp);
+  });
 }
 
 
@@ -74,7 +98,9 @@ module.exports = function (opts, next) {
 
   var today = resetTime(new Date());
 
-  if (today.getTime() == opts.date.getTime()) {
+  if (today.getTime() < opts.date.getTime()) {
+    return Forecast(opts, next);
+  } else if (today.getTime() == opts.date.getTime()) {
     return Today(opts, next);
   } else {
     return History(opts, next);

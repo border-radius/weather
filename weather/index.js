@@ -17,7 +17,7 @@ var wunderground = require('./wunderground');
 var worldweatheronline = require('./worldweatheronline');
 
 function Weather (opts, next) {
-  
+
   var search = iata(opts.iata);
 
   if (!search) return next(new Error('Location not found'));
