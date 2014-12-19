@@ -1,11 +1,16 @@
 var request = require('../lib/request');
 var leadingZero = require('../lib/leadingzero');
+var resetTime = require('../lib/resetTime');
 var APIKey = require('../config.json').WorldWeatherOnlineAPIKey;
 
 module.exports = function (opts, next) {
 
+  var today = resetTime(new Date());
+
   request([
-    'http://api.worldweatheronline.com/free/v2/past-weather.ashx?key=',
+    'http://api.worldweatheronline.com/free/v2/',
+    (today.getTime() < opts.date.getTime()) ? '' : 'past-',
+    'weather.ashx?key=',
     APIKey,
     '&date=',
     opts.date.getUTCFullYear(),
