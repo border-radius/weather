@@ -59,4 +59,17 @@ describe('Weather mediator', function () {
       done();
     });
   });
+
+  it('should return cached data', function (done) {
+    this.timeout(100);
+
+    weather({
+      iata: 'VKO', 
+      date: nov21
+    }, function (e, temp) {
+      (e === null).should.be.true;
+      temp.should.be.approximately(-4.92, 0.01);
+      done();
+    });
+  });
 });

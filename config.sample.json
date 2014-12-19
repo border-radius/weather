@@ -1,4 +1,6 @@
 {
   "WunderGroundAPIKey": "secret",
-  "WorldWeatherOnlineAPIKey": "secret"
+  "WorldWeatherOnlineAPIKey": "secret",
+  "CacheMax": 100,
+  "CacheTTLSeconds": 10
 }

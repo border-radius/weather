@@ -1,4 +1,13 @@
 var async = require('async');
+var cache_manager = require('cache-manager');
+
+var config = require('../config.json');
+
+var memory_cache = cache_manager.caching({
+  store: 'memory',
+  max: config.CacheMax || 100,
+  ttl: config.CacheTTLSeconds || 10
+});
 
 var iata = require('../iata');
 
@@ -6,7 +15,7 @@ var openweathermap = require('./openweathermap');
 var wunderground = require('./wunderground');
 var worldweatheronline = require('./worldweatheronline');
 
-module.exports = function (opts, next) {
+function Weather (opts, next) {
   
   var search = iata(opts.iata);
 
@@ -39,4 +48,23 @@ module.exports = function (opts, next) {
 
     next(null, temp);
   });
+};
+
+module.exports = function (opts, next) {
+  try {
+    opts.date = new Date(opts.date);
+    opts.date.setUTCHours(0);
+    opts.date.setUTCMinutes(0);
+    opts.date.setUTCSeconds(0);
+    opts.date.setUTCMilliseconds(0);
+  } catch (e) {
+    return next(e);
+  }
+  
+  memory_cache.wrap([
+    opts.iata,
+    opts.date.getTime()
+  ].join('/'), function (cache) {
+    Weather(opts, cache);
+  }, config.CacheTTLSeconds, next);
 };
