@@ -34,3 +34,4 @@ app.get(['/', '/:iata/:date'], function (req, res) {
 });
 
 app.listen(8030);
+console.log('Server launched at 8030 port (', new Date(), ')');
