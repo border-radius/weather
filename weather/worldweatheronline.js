@@ -1,10 +1,6 @@
 var request = require('request');
+var leadingZero = require('../lib/leadingzero');
 var APIKey = require('../config.json').WorldWeatherOnlineAPIKey;
-
-function leadingZero (num) {
-  if (num < 10) return '0' + num;
-  return num;
-}
 
 module.exports = function (coords, date, next) {
 

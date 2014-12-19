@@ -6,13 +6,11 @@ var weather = require('../weather');
 
 describe('OpenWeatherMap', function () {
   it('should return valid historical data', function (done) {
-
     owm([55.5913, 37.2613], 1416528000, function (e, temp) {
       (e === null).should.be.true;
       temp.should.be.approximately(-6.77, 0.01);
       done();
     });
-
   });
 });
 
