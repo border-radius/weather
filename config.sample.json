@@ -1,4 +1,4 @@
 {
   "WunderGroundAPIKey": "secret",
-  "WorldWeatherOnline": "secret"
+  "WorldWeatherOnlineAPIKey": "secret"
 }
