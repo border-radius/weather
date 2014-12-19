@@ -14,9 +14,9 @@ module.exports = function (opts, next) {
     '-',
     leadingZero(opts.date.getUTCDate()),
     '&q=',
-    opts.lon,
-    ',',
     opts.lat,
+    ',',
+    opts.lon,
     '&format=json'
   ].join(''), function (e, body) {
     if (e) return next(e);

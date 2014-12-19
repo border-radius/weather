@@ -14,8 +14,8 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 describe('OpenWeatherMap', function () {
   it('should return valid historical data', function (done) {
     owm({
-      lon: 55.5913,
-      lat: 37.2613,
+      lat: 55.5913,
+      lon: 37.2613,
       date: nov21
     }, function (e, temp) {
       (e === null).should.be.true;
@@ -26,8 +26,8 @@ describe('OpenWeatherMap', function () {
 
   it('should return today data', function (done) {
     owm({
-      lon: 55.5913,
-      lat: 37.2613,
+      lat: 55.5913,
+      lon: 37.2613,
       date: today
     }, function (e, temp) {
       (e === null).should.be.true;
@@ -38,8 +38,8 @@ describe('OpenWeatherMap', function () {
 
   it('should return tomorrow data', function (done) {
     owm({
-      lon: 55.5913,
-      lat: 37.2613,
+      lat: 55.5913,
+      lon: 37.2613,
       date: tomorrow
     }, function (e, temp) {
       (e === null).should.be.true;
@@ -52,8 +52,8 @@ describe('OpenWeatherMap', function () {
 describe('Wunderground', function () {
   it('should return valid historical data', function (done) {
     wunderground({
-      lon: 55.5913,
-      lat: 37.2613, 
+      lat: 55.5913,
+      lon: 37.2613, 
       date: nov21
     }, function (e, temp) {
       (e === null).should.be.true;
@@ -66,8 +66,8 @@ describe('Wunderground', function () {
 describe('WorldWeatherOnline', function () {
   it('should return valid historical data', function (done) {
     wwo({
-      lon: 55.5913,
-      lat: 37.2613, 
+      lat: 55.5913,
+      lon: 37.2613, 
       date: nov21
     }, function (e, temp) {
       (e === null).should.be.true;

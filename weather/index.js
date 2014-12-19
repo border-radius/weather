@@ -60,10 +60,11 @@ module.exports = function (opts, next) {
     return next(e);
   }
   
-  memory_cache.wrap([
+  /*memory_cache.wrap([
     opts.iata,
     opts.date.getTime()
   ].join('/'), function (cache) {
     Weather(opts, cache);
-  }, config.CacheTTLSeconds, next);
+  }, config.CacheTTLSeconds, next);*/
+  Weather(opts, next);
 };

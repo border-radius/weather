@@ -12,9 +12,9 @@ module.exports = function (opts, next) {
     leadingZero(opts.date.getUTCMonth() + 1),
     leadingZero(opts.date.getUTCDate()),
     '/q/',
-    opts.lon,
-    ',',
     opts.lat,
+    ',',
+    opts.lon,
     '.json'
   ].join(''), function (e, body) {
     if (e) return next(e);

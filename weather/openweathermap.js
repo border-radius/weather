@@ -51,9 +51,9 @@ function History (opts, next) {
 
   request([
     'http://api.openweathermap.org/data/2.5/station/find?lat=',
-    opts.lon,
-    '&lon=',
     opts.lat,
+    '&lon=',
+    opts.lon,
     '&cnt=1'
   ].join(''), function (e, body) {
     if (e) return next(e);
