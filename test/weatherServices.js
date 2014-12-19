@@ -13,6 +13,8 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 
 describe('OpenWeatherMap', function () {
   it('should return valid historical data', function (done) {
+    this.timeout(10000);
+
     owm({
       lat: 55.5913,
       lon: 37.2613,
@@ -25,6 +27,8 @@ describe('OpenWeatherMap', function () {
   });
 
   it('should return today data', function (done) {
+    this.timeout(10000);
+
     owm({
       lat: 55.5913,
       lon: 37.2613,
@@ -37,6 +41,8 @@ describe('OpenWeatherMap', function () {
   });
 
   it('should return tomorrow data', function (done) {
+    this.timeout(10000);
+
     owm({
       lat: 55.5913,
       lon: 37.2613,
@@ -51,6 +57,8 @@ describe('OpenWeatherMap', function () {
 
 describe('Wunderground', function () {
   it('should return valid historical data', function (done) {
+    this.timeout(10000);
+
     wunderground({
       lat: 55.5913,
       lon: 37.2613, 
@@ -61,10 +69,40 @@ describe('Wunderground', function () {
       done();
     });
   });
+
+  it('should return today data', function (done) {
+    this.timeout(10000);
+
+    wunderground({
+      lat: 55.5913,
+      lon: 37.2613, 
+      date: today
+    }, function (e, temp) {
+      (e === null).should.be.true;
+      (temp === null).should.be.false;
+      done();
+    });
+  });
+
+  it('should return tomorrow data', function (done) {
+    this.timeout(10000);
+
+    wunderground({
+      lat: 55.5913,
+      lon: 37.2613, 
+      date: tomorrow
+    }, function (e, temp) {
+      (e === null).should.be.true;
+      (temp === null).should.be.false;
+      done();
+    });
+  });
 });
 
 describe('WorldWeatherOnline', function () {
   it('should return valid historical data', function (done) {
+    this.timeout(10000);
+
     wwo({
       lat: 55.5913,
       lon: 37.2613, 
@@ -72,6 +110,34 @@ describe('WorldWeatherOnline', function () {
     }, function (e, temp) {
       (e === null).should.be.true;
       temp.should.be.equal(-1);
+      done();
+    });
+  });
+
+  it('should return today data', function (done) {
+    this.timeout(10000);
+
+    wwo({
+      lat: 55.5913,
+      lon: 37.2613, 
+      date: today
+    }, function (e, temp) {
+      (e === null).should.be.true;
+      (temp === null).should.be.false;
+      done();
+    });
+  });
+
+  it('should return tomorrow data', function (done) {
+    this.timeout(10000);
+
+    wwo({
+      lat: 55.5913,
+      lon: 37.2613, 
+      date: tomorrow
+    }, function (e, temp) {
+      (e === null).should.be.true;
+      (temp === null).should.be.false;
       done();
     });
   });
