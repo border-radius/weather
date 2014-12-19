@@ -39,7 +39,7 @@ function Weather (opts, next) {
 
     /* Filtering "null" results (if data not available in all services) */
     temps = temps.filter(function (temp) {
-      return !!temp;
+      return temp !== null;
     });
 
     /* Calculating average */
