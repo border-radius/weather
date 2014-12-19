@@ -1,6 +1,27 @@
 var request = require('../lib/request');
+var resetTime = require('../lib/resetTime');
 
-module.exports = function (opts, next) {
+function Today (opts, next) {
+
+  /* Today's data available on different API */
+
+  request([
+    'http://api.openweathermap.org/data/2.5/weather?lat=',
+    opts.lat,
+    '&lon=',
+    opts.lon
+  ].join(''), function (e, body) {
+    if (e) return next(e);
+
+    var temp = body.main.temp - 273.15;
+
+    return next(null, temp);
+  });
+
+}
+
+
+function History (opts, next) {
 
   /* Get stantion code */
 
@@ -34,7 +55,7 @@ module.exports = function (opts, next) {
 
       if (
         !body ||
-        !body.list ||
+        !body.list.length ||
         !body.list[0].temp
       ) {
         return next(null, null);
@@ -47,4 +68,15 @@ module.exports = function (opts, next) {
 
   });
 
+}
+
+module.exports = function (opts, next) {
+
+  var today = resetTime(new Date());
+
+  if (today.getTime() == opts.date.getTime()) {
+    return Today(opts, next);
+  } else {
+    return History(opts, next);
+  }
 };

@@ -25,8 +25,8 @@ module.exports = function (code) {
 
   if (IATA[code]) {
     return {
-      lon: IATA[code][0],
-      lat: IATA[code][1]
+      lat: IATA[code][0],
+      lon: IATA[code][1]
     };
   }
 };

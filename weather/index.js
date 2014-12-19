@@ -1,5 +1,6 @@
 var async = require('async');
 var cache_manager = require('cache-manager');
+var resetTime = require('../lib/resetTime');
 
 var config = require('../config.json');
 
@@ -54,11 +55,7 @@ function Weather (opts, next) {
 
 module.exports = function (opts, next) {
   try {
-    opts.date = new Date(opts.date);
-    opts.date.setUTCHours(0);
-    opts.date.setUTCMinutes(0);
-    opts.date.setUTCSeconds(0);
-    opts.date.setUTCMilliseconds(0);
+    opts.date = resetTime(new Date(opts.date));
   } catch (e) {
     return next(e);
   }
