@@ -50,6 +50,8 @@ describe('WorldWeatherOnline', function () {
 
 describe('Weather mediator', function () {
   it('should return valid average historical data', function (done) {
+    this.timeout(6000);
+
     weather({
       iata: 'VKO', 
       date: nov21
